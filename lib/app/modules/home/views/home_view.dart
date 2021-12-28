@@ -14,64 +14,81 @@ class HomeView extends GetView<HomeController> {
     final HomeController controller = Get.find();
     AppThemeService theme = Get.find();
     return Obx(() {
-        return Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: theme.background,
-            title: RichText(
-              text: TextSpan(
-                text: 'ESP32',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: theme.text,
-                  fontSize: 20,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: 'Remote Control',
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      color: theme.text,
-                      fontSize: 20,
-                    ),
+      return Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: theme.background,
+          title: RichText(
+            text: TextSpan(
+              text: 'ESP32',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: theme.text,
+                fontSize: 20,
+              ),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'Remote Control',
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: theme.text,
+                    fontSize: 20,
                   ),
-                ],
-              ),
-            ),
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  Icons.dark_mode,
-                  size: 28,
                 ),
-                onPressed: () => theme.toggleTheme(),
-                color: theme.select,
-              ),
-            ],
+              ],
+            ),
           ),
-          body: SafeArea(
-            child: Container(
-              width: size.width,
-              height: size.height,
-              color: theme.background,
-              child: FittedBox(
-                fit: BoxFit.contain,
-                alignment: Alignment.topCenter,
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.dark_mode,
+                size: 28,
+              ),
+              onPressed: () => theme.toggleTheme(),
+              color: theme.select,
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: Container(
+            width: size.width,
+            height: size.height,
+            color: theme.background,
+            child: FittedBox(
+              fit: BoxFit.contain,
+              alignment: Alignment.topCenter,
+              child: SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     SizedBox(
                       width: size.width,
-                      height: size.height * 0.1,
                       child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[],
+                        padding: const EdgeInsets.all(20),
+                        child: Form(
+                          key: controller.formKey,
+                          child: TextFormField(
+                            style: TextStyle(color: theme.text),
+                            decoration: InputDecoration(
+                                label: const Text("IP Address"),
+                                hintText: "192.168.13.250",
+                                hintStyle:
+                                    TextStyle(color: theme.text, fontSize: 10),
+                                labelStyle:
+                                    TextStyle(color: theme.text, fontSize: 20)),
+                            validator: (value) =>
+                                controller.ipAddressValidator(value),
+                            controller: controller.ipAddressController,
+                            onEditingComplete: controller.onFormSave,
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) => controller.onFormSave,
+                            onFieldSubmitted: (value) => controller.onFormSave,
+                          ),
                         ),
                       ),
                     ),
+                    ElevatedButton(
+                        onPressed: controller.onFormSave,
+                        child: const Text("Set")),
                     SizedBox(
                       height: size.height / 10,
                     ),
@@ -229,8 +246,8 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ),
                                 InkWell(
-                                  onTap: () => controller
-                                      .buttonPressed(RemoteCommands.channelDown),
+                                  onTap: () => controller.buttonPressed(
+                                      RemoteCommands.channelDown),
                                   child: Icon(
                                     Icons.keyboard_arrow_down,
                                     color: theme.iconButton,
@@ -248,8 +265,8 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 }
