@@ -102,10 +102,14 @@ class HomeView extends GetView<HomeController> {
                           SizedBox(
                             width: size.height * 0.11,
                             height: size.height * 0.08,
-                            child: Icon(
-                              Icons.volume_down,
-                              color: theme.icon,
-                              size: 28,
+                            child: IconButton(
+                              onPressed: () => controller
+                                      .buttonPressed(RemoteCommands.mute),
+                              icon: Icon(
+                                Icons.volume_down,
+                                color: theme.icon,
+                                size: 28,
+                              ),
                             ),
                           ),
                           InkWell(
@@ -160,12 +164,12 @@ class HomeView extends GetView<HomeController> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
-                                InkWell(
-                                  onTap: () {
+                                IconButton(
+                                  onPressed: () => {
                                     controller
-                                        .buttonPressed(RemoteCommands.volumeUp);
+                                        .buttonPressed(RemoteCommands.volumeUp)
                                   },
-                                  child: Icon(
+                                  icon: Icon(
                                     Icons.add,
                                     color: theme.iconButton,
                                     size: 38,
@@ -179,10 +183,10 @@ class HomeView extends GetView<HomeController> {
                                     fontSize: 24,
                                   ),
                                 ),
-                                InkWell(
-                                  onTap: () => controller
-                                      .buttonPressed(RemoteCommands.volumeUp),
-                                  child: Icon(
+                                IconButton(
+                                  onPressed: () => controller
+                                      .buttonPressed(RemoteCommands.volumeDown),
+                                  icon: Icon(
                                     Icons.remove,
                                     color: theme.iconButton,
                                     size: 38,
@@ -228,10 +232,10 @@ class HomeView extends GetView<HomeController> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
-                                InkWell(
-                                  onTap: () => controller
+                                IconButton(
+                                  onPressed: () => controller
                                       .buttonPressed(RemoteCommands.channelUp),
-                                  child: Icon(
+                                  icon: Icon(
                                     Icons.keyboard_arrow_up,
                                     color: theme.iconButton,
                                     size: 38,

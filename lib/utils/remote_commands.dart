@@ -1,8 +1,8 @@
 class RemoteCommands {
-  static const power = "23DC";
-  static const channelDown = "7986";
-  static const channelUp = "7A85";
-  static const volumeUp = "7A85";
-  static const volumeDown = "7A85";
-  static const mute = "7A85";
+  static const power = "0x23DC";
+  static const channelDown = "0x7986";
+  static const channelUp = "0x7A85";
+  static const volumeUp = "0x7F80";
+  static const volumeDown = "0x7E81";
+  static const mute = "0x7A85";
 }
