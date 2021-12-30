@@ -1,0 +1,6 @@
+POST http://192.168.70.250/remote
+
+{
+    "address": "FD01",
+    "cmd": "23DC" 
+}
